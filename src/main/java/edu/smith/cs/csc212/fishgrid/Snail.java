@@ -15,7 +15,7 @@ public class Snail extends WorldObject {
 	/**
 	 * This is the color of the Snail's body.
 	 */
-	public Color bodyColor = Color.magenta;
+	public Color bodyColor = new Color(115, 12, 5);
 	/**
 	 * This is the color of the snail shell.
 	 */
@@ -58,7 +58,7 @@ public class Snail extends WorldObject {
 		Shape eyeWhiteR = new Ellipse2D.Double(35 - 4, -28, 12, 12);
 		Shape eyePupilR = new Ellipse2D.Double(35 + 2, -26 + 4, 4, 4);
 		
-		bodyColor = Color.magenta;
+		//bodyColor = Color.magenta;
 		g.setColor(bodyColor);
 		g.fill(body);
 		g.fill(tentacleL);

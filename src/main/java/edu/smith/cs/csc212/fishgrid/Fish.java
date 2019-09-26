@@ -16,12 +16,20 @@ public class Fish extends WorldObject {
 	 * A fish is only special because of its color now!
 	 */
 	static Color[] COLORS = {
+
 			Color.red,
 			Color.green,
-			Color.yellow
-			// TODO: (lab) Add more colors.
-			// TODO: (FishGrid) Maybe make a special fish that is more points?
+			Color.yellow,
+			Color.blue,
+			Color.pink,
+			Color.cyan
+			
+			
+
+			// each fish is worth its color index *10 of points, except the cyan fish is 
+			//special and worth 100
 	};
+	
 	/**
 	 * This is an index into the {@link #COLORS} array.
 	 */
@@ -31,12 +39,23 @@ public class Fish extends WorldObject {
 	 */
 	boolean player = false;
 	
+	boolean fastScared = false;
+	
 	/**
 	 * Called only on the Fish that is the player!
 	 */
 	public void markAsPlayer() {
 		this.player = true;
 	}
+	
+	public int fishScore() {
+		if(this.color == 5) {
+			return 100;
+		}else {
+			return this.color*10;
+		}
+	}
+
 
 
 	/**
@@ -47,6 +66,10 @@ public class Fish extends WorldObject {
 	public Fish(int color, World world) {
 		super(world);
 		this.color = color;
+		if(rand.nextBoolean()&&rand.nextBoolean()) {
+			fastScared = true;
+			//boolean small = true;
+		}
 	}
 	
 	/**

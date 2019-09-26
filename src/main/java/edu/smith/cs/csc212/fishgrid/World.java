@@ -156,6 +156,11 @@ public class World {
 		insertRandomly(r);
 		return r;
 	}
+	public FallingRock insertFallingRockRandomly() {
+		FallingRock r =new FallingRock(this);
+		insertRandomly(r);
+		return r;
+	}
 	
 	/**
 	 * Insert a new Fish into the world at random of a specific color.
@@ -206,9 +211,19 @@ public class World {
 		for (WorldObject it : inSpot) {
 			// TODO(FishGrid): Don't let us move over rocks as a Fish.
 			// The other fish shouldn't step "on" the player, the player should step on the other fish.
+			if (it instanceof Fish) {
+				if(isPlayer) {
+					return true;
+				}else {
+					return false;
+				}
+			}
 			if (it instanceof Snail) {
 				// This if-statement doesn't let anyone step on the Snail.
 				// The Snail(s) are not gonna take it.
+				return false;
+			}
+			if(it instanceof Rock) {
 				return false;
 			}
 		}
@@ -233,10 +248,13 @@ public class World {
 	 * @param followers a set of objects to follow the leader.
 	 */
 	public static void objectsFollow(WorldObject target, List<? extends WorldObject> followers) {
-		// TODO(FishGrid) Comment this method!
 		// What is recentPositions?
+		//recentPositions is a dequeue of the recent positions of each objects
 		// What is followers?
+		//followers is a list of any world object that follows the "target" object
 		// What is target?
+		//target is the leader of the list of objects, ie the player
+		
 		// Why is past = putWhere[i+1]? Why not putWhere[i]?
 		List<IntPoint> putWhere = new ArrayList<>(target.recentPositions);
 		for (int i=0; i < followers.size() && i+1 < putWhere.size(); i++) {

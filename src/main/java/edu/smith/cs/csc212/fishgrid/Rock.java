@@ -3,6 +3,7 @@ package edu.smith.cs.csc212.fishgrid;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
+import java.util.Random;
 
 /**
  * It would be awful nice to have multi-colored rocks at random.
@@ -27,15 +28,16 @@ public class Rock extends WorldObject {
 			new Color(72,60,50)
 	};
 	
-	// TODO(lab): introduce a variable that is part of the class (one per Rock object) here that indexes the ROCK_COLORS array.
 	
+	public int rockColor;
 	/**
 	 * Construct a Rock in our world.
 	 * @param world - the grid world.
 	 */
 	public Rock(World world) {
 		super(world);
-		// TODO(lab): initialize your rock color index to a random number!
+
+		rockColor = rand.nextInt(8);
 		// Note that all WorldObjects have a ``rand`` available so you don't need to make one.
 	}
 
@@ -44,8 +46,8 @@ public class Rock extends WorldObject {
 	 */
 	@Override
 	public void draw(Graphics2D g) {
-		// TODO(lab): use the right color in here...
-		g.setColor(Color.gray);
+		
+		g.setColor(ROCK_COLORS[rockColor]);
 		RoundRectangle2D rock = new RoundRectangle2D.Double(-.5,-.5,1,1,0.3,0.3);
 		g.fill(rock);
 	}
