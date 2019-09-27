@@ -37,13 +37,19 @@ public class FishGame {
 	 * Number of steps!
 	 */
 	int stepsTaken;
-	
+	/**
+	 * The food, inspired by Ben and Jerry's phish food icecream.
+	 */
+	FishFood phishFood;
 	/**
 	 * Score!
 	 */
 	int score;
+	/**
+	 * Number of rocks and falling rocks the game will generate
+	 */
 	public static final int NUM_ROCKS =20;
-	public static final int NUM_FALLING_ROCKS =50;
+	public static final int NUM_FALLING_ROCKS =5;
 	
 	/**
 	 * Create a FishGame of a particular size.
@@ -67,7 +73,8 @@ public class FishGame {
 			world.insertFallingRockRandomly();
 		}
 		
-
+		phishFood = world.insertFishFoodRandomly();
+		
 		for(int i=0;i<2;i++) {
 			world.insertSnailRandomly();
 		}
@@ -111,6 +118,9 @@ public class FishGame {
 	public int incScore(Fish fish) {
 		return fish.fishScore();
 	}
+	public int foodBonus(FishFood phishFood) {
+		return phishFood.foodScore;
+	}
 
 	/**
 	 * Update positions of everything (the user has just pressed a button).
@@ -126,6 +136,13 @@ public class FishGame {
 		
 		// If we find a fish, remove it from missing.
 		for (WorldObject wo : overlap) {
+			
+			// if the player is on the food, give it points
+			if(wo.isFood()) {
+				score += foodBonus((FishFood) wo);
+				//remove the food after it has been eaten
+				wo.remove();
+			}
 			// It is missing if it's in our missing list.
 			if (missing.contains(wo)) {
 				// Remove this fish from the missing list.
@@ -138,9 +155,17 @@ public class FishGame {
 				
 				// Increase score when you find a fish!
 				score += incScore((Fish) wo);
+				
+				
 			}
 		}
-
+		// if a missing fish gets to the fish food before the player, the food is removed 
+		//and the player wont get the points 
+		for(Fish fish : missing) {
+			if((fish.getX() == phishFood.getX())&&(fish.getY()==phishFood.getY())) {
+				phishFood.remove();
+			}
+		}
 		
 		// Make sure missing fish *do* something.
 		wanderMissingFish();
@@ -159,6 +184,7 @@ public class FishGame {
 			// 30% of the time, lost fish move randomly.
 			if ((rand.nextDouble() < 0.3)&&!lost.fastScared) {
 				lost.moveRandomly();
+			//if the fish is fast.Scared, it has an 80% chance of moving randomly
 			}else if((rand.nextDouble()<.8)&& lost.fastScared) {
 				lost.moveRandomly();
 			}
@@ -171,7 +197,7 @@ public class FishGame {
 	 * @param y - the y-tile.
 	 */
 	public void click(int x, int y) {
-		// TODO(FishGrid) use this print to debug your World.canSwim changes!
+		// 
 		System.out.println("Clicked on: "+x+","+y+ " world.canSwim(player,...)="+world.canSwim(player, x, y));
 		List<WorldObject> atPoint = world.find(x, y);
 		for(WorldObject wo : atPoint) {

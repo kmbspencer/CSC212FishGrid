@@ -123,9 +123,22 @@ public abstract class WorldObject {
 	public boolean isFish() {
 		return this instanceof Fish;
 	}
-	
+	/**
+	 * Is this a rock?
+	 * 
+	 * @return true if this is a Rock.
+	 */
 	public boolean isRock() {
 		return this instanceof Rock;
+	}
+	/**
+	 * Is this food?
+	 * 
+	 * @return true if this is FishFood.
+	 */
+	
+	public boolean isFood() {
+		return this instanceof FishFood;
 	}
 
 	/**

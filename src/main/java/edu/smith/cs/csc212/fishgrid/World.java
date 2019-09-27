@@ -156,10 +156,23 @@ public class World {
 		insertRandomly(r);
 		return r;
 	}
+	/**
+	 * Insert a new FallingRock into the world at random.
+	 * @return the FallingRock.
+	 */
 	public FallingRock insertFallingRockRandomly() {
 		FallingRock r =new FallingRock(this);
 		insertRandomly(r);
 		return r;
+	}
+	/**
+	 * Insert a new FishFood into the world at random.
+	 * @return the FishFood.
+	 */
+	public FishFood insertFishFoodRandomly() {
+		FishFood f = new FishFood(this);
+		insertRandomly(f);
+		return f;
 	}
 	
 	/**
@@ -209,7 +222,7 @@ public class World {
 		List<WorldObject> inSpot = this.find(x, y);
 		
 		for (WorldObject it : inSpot) {
-			// TODO(FishGrid): Don't let us move over rocks as a Fish.
+			// 
 			// The other fish shouldn't step "on" the player, the player should step on the other fish.
 			if (it instanceof Fish) {
 				if(isPlayer) {
